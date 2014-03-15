@@ -1,4 +1,4 @@
-package com.javalibs.util;
+package com.javalibs.math;
 
 public class NumberBaseUtil {
 

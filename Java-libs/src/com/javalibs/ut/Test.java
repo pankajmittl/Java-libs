@@ -1,6 +1,6 @@
 package com.javalibs.ut;
 
-import com.javalibs.util.NumberUtils;
+import com.javalibs.math.NumberUtils;
 
 public class Test {
 
