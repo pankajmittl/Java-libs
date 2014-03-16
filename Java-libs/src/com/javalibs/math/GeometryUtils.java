@@ -37,4 +37,21 @@ public class GeometryUtils {
 	public int getAreaOfRectangle(Dimension[] d) {
 		return getAreaOfPolygon(d, 3);
 	}
+	
+	/*
+	 * Input format is Ax + By = C
+	 */
+	public double[] getIntersectionPoint(int[] l1, int[] l2) {
+		double[] cross = new double[2];
+
+		double det = l1[0]*l2[1] - l2[0]*l1[1];
+		if(det == 0){
+			//Lines are parallel
+			return null;
+		}else{
+			cross[0] = (l2[1]*l1[2] - l1[1]*l2[2])/det;
+			cross[1] = (l1[0]*l2[2] - l2[0]*l1[2])/det;
+		}
+		return cross;
+	}
 }
