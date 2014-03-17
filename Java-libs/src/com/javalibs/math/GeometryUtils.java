@@ -1,5 +1,7 @@
 package com.javalibs.math;
 
+import java.util.Arrays;
+
 public class GeometryUtils {
 	
 	/* 
@@ -137,6 +139,58 @@ public class GeometryUtils {
 		circle.setRadius((int)getDistanceBwTwoPoints(icross, a));
 		
 		return circle;
+	}
+	
+	public static double[] getProjectionPointOnLine(int p[], int line[])
+	{
+		int[] slope = {line[1], line[0]};
+		int[] pline = getLineWithSlopeAndPoint(slope, p);
+		double[] cross = getIntersectionPoint(line, pline);
+		return cross;
+	}
+	
+	public static int[] getReflectionPoint(int p[], int l[])
+	{
+		double[] projp = getProjectionPointOnLine(p, l);
+		int[] rp = {(int)(2 *projp[0] - p[0]), (int)(2*projp[1] - p[1])};
+		
+		return rp;
+	}
+	
+	public static int[] getReflectionPointUsingVector(int p[], int l[])
+	{
+		int[] a = {-1 * l[0], l[1]};
+		int[] c = {l[2], l[1]};
+		int[] x = {p[0], 1};
+		int[] y = {p[1], 1};
+		int[] temp = {1, 1};
+		temp = FractionUtils.addFractions(temp, FractionUtils.multiplyFractions(a, a)); //(1+a^2)
+		
+		int[] d = FractionUtils.addFractions(x, FractionUtils.multiplyFractions(FractionUtils.subFractions(y, c), a)); //(x + (y-c)*a)
+		d = FractionUtils.divFractions(d, temp);
+		
+		d[0] *= 2;
+		
+		int[] rp = new int[2];
+		
+		temp = FractionUtils.subFractions(d, x);
+		rp[0] = temp[0]/temp[1];
+		c[0] *= 2;
+		
+		temp = FractionUtils.addFractions(FractionUtils.subFractions(FractionUtils.multiplyFractions(d, a), y), c);
+		rp[1] = temp[0]/temp[1];
+		
+		return rp	;
+	}
+	
+	public static int[] getRotatedPointWRTPoint(int ref[], int point[], int angleDeg)
+	{
+		double radian = Math.toRadians(angleDeg);
+		int[] rotp = new int[2];
+		rotp[0] = (int)(Math.cos(radian) * (point[0] - ref[0]) - Math.sin(radian) * (point[1] - ref[1]) + ref[0]);
+		rotp[1] = (int)Math.abs(Math.sin(radian) * (point[0] - ref[0]) + Math.cos(radian) * (point[1] - ref[1]) + ref[1]);
+		
+		return rotp;
 	}
 	
 }

@@ -6,15 +6,15 @@ package com.javalibs.math;
 
 public class VectorUtils {
 
-	//Compute the dot product AB ⋅ AC
+	//Compute the dot product AB ⋅ BC
     public static int dot(int[] A, int[] B, int[] C){
         int[] AB = new int[2];
-        int[] AC = new int[2];
+        int[] BC = new int[2];
         AB[0] = B[0]-A[0];
         AB[1] = B[1]-A[1];
-        AC[0] = C[0]-A[0];
-        AC[1] = C[1]-A[1];
-        int dot = AB[0] * AC[0] + AB[1] * AC[1];
+        BC[0] = C[0]-B[0];
+        BC[1] = C[1]-B[1];
+        int dot = AB[0] * BC[0] + AB[1] * BC[1];
         return dot;
     }
     

@@ -57,8 +57,42 @@ public class Test {
 		if(pbs[0] != 3 || pbs[1] != -2 || pbs[2] != 5) return false;
 		
 		//circle using 3 points test
+		a[0] = 0; a[1] = 2;
+		b[0] = 0; b[1] = -2;
+		int[] c = {2, 0};
+		Circle circle = GeometryUtils.getCircleFromThreePoints(a, b, c);
 		
+		a[0] = 0; a[1] = 0;
+		if(!circle.equals(new Circle(2, a))) return false;
+	
+		//reflection point test -> y=0 & (2, 2)
+		int[] line = {0, 1, 0};
+		a[0] = -2; a[1] = -2;
+		b = GeometryUtils.getReflectionPoint(a, line);
+		System.out.println(Arrays.toString(b));
+		if(b[0] != -2 || b[1] != 2) return false;
 		
+		//reflection point test -> y=0 & (2, 2)
+		line[0] = 1; line[1] = 1; line[2] = 32;
+		a[0] = 0; a[1] = 0;
+		b = GeometryUtils.getReflectionPoint(a, line);
+		System.out.println(Arrays.toString(b));
+		if(b[0] != 32 || b[1] != 32) return false;
+		
+		//point rotation test1
+		a[0] = 0; a[1] = 0;	//ref point
+		b[0] = 2; b[1] = 0; //to be rotated
+		c = GeometryUtils.getRotatedPointWRTPoint(a, b, 90);
+		System.out.println(Arrays.toString(c));
+		if(c[0] != 0 || c[1] != 2) return false;
+
+		//point rotation test2
+		a[0] = 1; a[1] = 1;	//ref point
+		b[0] = 2; b[1] = 2; //to be rotated
+		c = GeometryUtils.getRotatedPointWRTPoint(a, b, 30);
+		System.out.println(Arrays.toString(c));
+		//if(c[0] != 0 || c[1] != 2) return false;
+
 		return true;
 	}
 }
