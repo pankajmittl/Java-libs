@@ -69,30 +69,45 @@ public class Test {
 		int[] line = {0, 1, 0};
 		a[0] = -2; a[1] = -2;
 		b = GeometryUtils.getReflectionPoint(a, line);
-		System.out.println(Arrays.toString(b));
+		//System.out.println(Arrays.toString(b));
 		if(b[0] != -2 || b[1] != 2) return false;
 		
 		//reflection point test -> y=0 & (2, 2)
 		line[0] = 1; line[1] = 1; line[2] = 32;
 		a[0] = 0; a[1] = 0;
 		b = GeometryUtils.getReflectionPoint(a, line);
-		System.out.println(Arrays.toString(b));
+		//System.out.println(Arrays.toString(b));
 		if(b[0] != 32 || b[1] != 32) return false;
 		
 		//point rotation test1
 		a[0] = 0; a[1] = 0;	//ref point
 		b[0] = 2; b[1] = 0; //to be rotated
 		c = GeometryUtils.getRotatedPointWRTPoint(a, b, 90);
-		System.out.println(Arrays.toString(c));
+		//System.out.println(Arrays.toString(c));
 		if(c[0] != 0 || c[1] != 2) return false;
 
 		//point rotation test2
 		a[0] = 1; a[1] = 1;	//ref point
 		b[0] = 2; b[1] = 2; //to be rotated
 		c = GeometryUtils.getRotatedPointWRTPoint(a, b, 30);
-		System.out.println(Arrays.toString(c));
+		//System.out.println(Arrays.toString(c));
 		//if(c[0] != 0 || c[1] != 2) return false;
+		
+		//convex hull test1
+		int[][] points = {{1,1}, {2,2}, {2,5}, {4,2}};
+		boolean boundary[] = GeometryUtils.getConvexHull(points);
+		
+		if(!boundary[0] || boundary[1] || !boundary[2] || !boundary[3]) return false;
+
+		//convex hull test1
+		int[][] points2 = {{2,2}, {2,4}, {3, 4}, {2,6}, {4,4}, {4,2}, {6, 6}};
+		boundary = GeometryUtils.getConvexHull(points2);
+
+		if(!boundary[0] || boundary[1] || boundary[2] || !boundary[3] ||
+			boundary[4] || !boundary[5] || !boundary[6]) return false;
 
 		return true;
+		
+		
 	}
 }

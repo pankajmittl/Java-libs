@@ -192,5 +192,56 @@ public class GeometryUtils {
 		
 		return rotp;
 	}
-	
+
+	public static boolean[] getConvexHull(int a[][])
+	{
+		int n = a.length;
+		boolean[] used = new boolean[n]; Arrays.fill(used, false);
+		int start = 0;
+
+		//searching left most point
+		for(int i=1; i<n; i++) {
+			if((a[i][0] < a[start][0]) ||
+					(a[i][0] == a[start][0] && a[i][1] > a[start][1])){
+				start = i;
+			}
+		}
+
+		int next = -1;
+		int p = start;
+
+		do {
+			next = -1;
+			int dist = 0;
+
+			for(int i=0; i<n; i++)
+			{
+				if(i==p) continue;
+
+				if(used[i]) continue;
+
+				if(next == -1) next = i;
+
+				int cross = VectorUtils.cross(a[p], a[i], a[next]); //pi x pn
+
+				int tmpdist = VectorUtils.dot2(a[p], a[i], a[next]); //pi . pn
+
+				if(cross < -1) {
+					dist = tmpdist;
+					next = i;
+				} else if(cross == 0){
+					if(tmpdist > dist) {
+						dist = tmpdist;
+						next = i;
+					}
+				}				
+			}
+			p = next;
+			used[p] = true;
+
+		}while(start != next);
+
+		return used;
+	}
+
 }
