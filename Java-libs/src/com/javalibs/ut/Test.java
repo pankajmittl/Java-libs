@@ -107,7 +107,5 @@ public class Test {
 			boundary[4] || !boundary[5] || !boundary[6]) return false;
 
 		return true;
-		
-		
 	}
 }

@@ -59,6 +59,26 @@ public class GeometryUtils {
 		return cross;
 	}
 	
+	public static boolean segmentsIntersect(int[] a, int[] b, int[] x, int[] y)
+	{
+		int[] r = {b[0]-a[0], b[1]-a[1]};
+		int[] s = {y[0]-x[0], y[1]-x[1]};
+		
+		int cross = r[0]*s[1] - r[1]*s[0]; //r x s
+		
+		if(cross == 0) return false; 
+		
+		double t = (x[0] - a[0])*s[1] - (x[1] - a[1])*s[0]; // (x-a)*s
+		t = Math.abs(t / cross);
+		
+		double u = (a[0] - x[0])*r[1] - (a[1] - x[1])*r[0];
+		u = Math.abs(u / cross);
+		
+		if(t < 1 && u < 1) return true;
+		
+		return false;
+	}
+	
 	public static int[] normalizeLine(int[] line) {
 		int gcdf = NumberUtils.gcd(NumberUtils.gcd(line[0], line[1]), line[2]);
 
@@ -243,5 +263,29 @@ public class GeometryUtils {
 
 		return used;
 	}
-
+	
+	public static String pointInPolygon(int[][] polygon, int[] point)
+	{
+		int n = polygon.length;
+		int count = 0;
+		for(int i=0; i<n; i++)
+		{
+			if(VectorUtils.linePointDist(polygon[i], polygon[i%n], point, false) == 0)
+			{
+				return "BOUNDARY";
+			} else {
+				int[] extPoint = new int[2];
+				extPoint[0] = 1000000;
+				extPoint[1] = 1000000;
+				if(segmentsIntersect(polygon[i], polygon[i%n], point, extPoint))
+				{
+					count++;
+				}				
+			}
+		}
+		if(count == 1) return "INTERIOR";
+		if(count == 2) return "EXTERIOR";
+		
+		return "WRONG ALGO";
+	}
 }
