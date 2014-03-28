@@ -16,6 +16,8 @@ public class Test {
 		System.out.println("GCD Tests Passed :"+test.testGCD());
 		System.out.println("LCM Tests Passed :"+test.testLCM());
 		System.out.println("Geometry Tests Passed :"+test.testGeometry());
+		
+		new LinkListTest().runTests();
 	}
 	
 	public boolean testGCD() {
@@ -105,7 +107,26 @@ public class Test {
 
 		if(!boundary[0] || boundary[1] || boundary[2] || !boundary[3] ||
 			boundary[4] || !boundary[5] || !boundary[6]) return false;
+		
+		//line point distance test
+		double dist = VectorUtils.linePointDist(new int[]{0,0}, new int[]{0,4}, new int[]{0,2}, true);
+		if(dist != 0) return false;
+		
+		//point in polygon test
+		int[][] polygon = {{0,0}, {0,10}, {10,10}, {10,0}};
+		
+		a[0]=2; a[1]=2;
+		b[0]=0; b[1]=2;
+		System.out.println(GeometryUtils.pointInPolygon2(polygon, new int[]{5,5}));
+		System.out.println(GeometryUtils.pointInPolygon2(polygon, new int[]{10,15}));
+		System.out.println(GeometryUtils.pointInPolygon2(polygon, new int[]{5,10}));
+		
+		int[][] polygon2 = {{-100, -90}, {-100, 100},{100, 100}, {100, -100},
+				{-120, -100},{-120, 100},{-130, 100},{-130, -110},
+				{110, -110}, {110, 110}, {-110, 110},{-110, -90}};
 
+		System.out.println(GeometryUtils.pointInPolygon2(polygon2, new int[]{0,0}));
+		
 		return true;
 	}
 }
